@@ -1,0 +1,156 @@
+# ========================================
+# Private Development Environment
+# ========================================
+
+# Development documentation (untracked - keep private)
+DEV_DOCS/
+/DEV_DOCS/
+**/DEV_DOCS/
+REFACTOR_NOTES/
+/REFACTOR_NOTES/
+
+# Staging area (local development only)
+.staging/
+
+# Environment files (NEVER commit - contains credentials)
+# CRITICAL: These files contain database passwords, JWT secrets, and API keys
+# Even if they appear to be "development" credentials, they must never be committed
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+**/.env.local
+**/.env.*.local
+
+# Build artifacts
+**/target/
+**/build/
+**/dist/
+**/node_modules/
+
+# IDE settings
+**/.idea/
+**/.vscode/settings.json
+**/.classpath
+**/.project
+**/.settings/
+**/.factorypath
+
+# Test reports and logs
+deployment-test-report.json
+**/*.log
+**/*.dumpstream
+**/test-results/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+**/*.class
+
+# Package files
+**/*.jar
+**/*.war
+
+# Large deployment artifacts (use Git LFS or external storage)
+*.zip
+*.tar
+deployment-package/images/
+
+# ========================================
+# PERSONAL & PRIVATE FILES (NEVER COMMIT)
+# ========================================
+
+# Private development directory
+.private/
+
+# Sensitive development documentation
+CHECKPOINT*.md
+DEPLOYMENT_TEST*.md
+DEV_*.md
+MASTER_DEPLOYMENT*.md
+PUBLIC_SHOWCASE*.md
+*-INTERNAL.md
+*_INTERNAL.md
+ML_VISION_ENCRYPTION_INTEGRATION.md
+TESTING_*.md
+PHASE*.md
+
+# Environment configuration templates with secrets
+.env.example
+**/.env.example
+
+# Database dumps and backups
+*.sql.gz
+*.dump
+backup/
+
+# Docker secrets
+secrets/
+*.secret
+
+# ========================================
+# BACKEND MICROSERVICES - PRIVATE (IP PROTECTION)
+# ========================================
+# Backend services are built into Docker images and published to Docker Hub as read-only
+# Source code remains private to protect intellectual property
+# Only frontend development and orchestration scripts are public
+data-core/
+edge-node/
+identity-service/
+stream-processing/
+middleware/
+contracts/
+pom.xml
+**/*.class.original
+**/*.jar.original
+
+# ========================================
+# Git Filter-Branch Artifacts
+# ========================================
+.git-rewrite/
+
+# ========================================
+# Public Repository Notes
+# ========================================
+# This repository follows the "Siloed Showcase Strategy"
+# Public repos contain isolated components only
+# Integration code remains in private repositories
+**/.private/
+PRIVATE_*.md
+**/PRIVATE_*.md
+
+# Personal learning paths and career notes
+**/CAREER_LEARNING*.md
+**/LEARNING_PATH*.md
+**/PORTFOLIO_*.md
+
+# Obsidian workspace files
+.obsidian/
+**/.obsidian/
+*.obsidian
+
+# Personal notes and documentation
+**/NOTES_*.md
+**/TODO_PRIVATE.md
+**/notes/
+**/personal/
+
+# Security audit scripts (contain findings)
+**/security-audit.ps1
+**/security-audit.log
+
+# Development session logs
+**/DEV_SESSION_*.md
+**/SESSION_NOTES_*.md
+
+# Certification keys and credentials
+*.key
+*.pem
+*.p12
+*.pfx
+credentials/
+secrets/
+keys/

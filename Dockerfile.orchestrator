@@ -1,0 +1,101 @@
+# ============================================================
+# YO3 Platform - Unified Single Container Orchestrator
+# ============================================================
+# Single container deployment for enhanced IP protection
+# All services bundled and managed internally
+# Security: Difficult to decompose or reverse engineer
+
+# Stage 1: Build Java Services
+FROM maven:3.9-eclipse-temurin-21 AS builder
+
+WORKDIR /build
+
+# Copy all source code
+COPY . .
+
+# Build all services (skip middleware if it fails)
+RUN mvn clean package -DskipTests -T 1C \
+    -pl data-core,edge-node,identity-service,stream-processing \
+    -am 2>&1 | tee build.log || true
+
+# Attempt to build middleware separately (optional)
+RUN cd /build/middleware && mvn clean package -DskipTests || echo "Middleware build optional"
+
+# Stage 2: Build Frontend
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /build/frontend
+
+COPY frontend/package*.json ./
+RUN npm ci
+
+COPY frontend/ .
+RUN npm run build
+
+# Stage 3: Runtime - Unified Platform Container
+FROM eclipse-temurin:21-jdk-alpine
+
+LABEL maintainer="YO3 Platform <support@yo3platform.dev>"
+LABEL description="YO3 Platform - Unified Single Container with All Services"
+LABEL version="1.0.0"
+
+# Install required system packages
+RUN apk add --no-cache \
+    bash \
+    curl \
+    postgresql-client \
+    mysql-client \
+    ca-certificates \
+    tzdata \
+    dumb-init \
+    && rm -rf /var/cache/apk/*
+
+# Create application directories
+RUN mkdir -p /opt/yo3/{services,frontend,logs,config,scripts,data}
+
+WORKDIR /opt/yo3
+
+# Copy service JARs from builder - only copy what exists
+COPY --from=builder /build/data-core/target/data-core-*.jar /opt/yo3/services/data-core.jar
+COPY --from=builder /build/edge-node/target/edge-node-*.jar /opt/yo3/services/edge-node.jar
+COPY --from=builder /build/identity-service/target/identity-service-*.jar /opt/yo3/services/identity-service.jar
+COPY --from=builder /build/stream-processing/target/stream-processing-*.jar /opt/yo3/services/stream-processing.jar
+
+# Copy frontend from frontend-builder
+COPY --from=frontend-builder /build/frontend/dist /opt/yo3/frontend/dist
+
+# Copy configuration files
+COPY .env.docker /opt/yo3/config/.env
+COPY ops/ /opt/yo3/config/ops/
+
+# Copy orchestrator scripts
+COPY scripts/orchestrator/ /opt/yo3/scripts/
+
+# Make scripts executable
+RUN chmod +x /opt/yo3/scripts/*.sh
+
+# Create non-root user for security
+RUN addgroup -g 1000 yo3 && adduser -D -u 1000 -G yo3 yo3
+RUN chown -R yo3:yo3 /opt/yo3
+
+# Switch to non-root user
+USER yo3
+
+# Expose all service ports
+EXPOSE 8080 8081 8082 8091 5173 9090 3306 5432
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD /opt/yo3/scripts/health-check.sh || exit 1
+
+# Set environment defaults
+ENV SPRING_PROFILES_ACTIVE=production
+ENV JAVA_OPTS="-Xmx2G -Xms512M -XX:+UseG1GC"
+ENV YO3_LOG_LEVEL=INFO
+ENV TZ=UTC
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+
+# Start orchestrator
+CMD ["/opt/yo3/scripts/orchestrator.sh"]

@@ -1,0 +1,114 @@
+.neonDividerSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem 2rem 1rem 2rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.neonLine {
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+  border: none;
+}
+
+.neonText {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.homeButtonContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.logoImage {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.navContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navControls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.userInfo {
+  color: #333;
+  margin-right: 0.5rem;
+}
+
+.testButton {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .neonDividerSection {
+    padding: 1.5rem 1rem 0.75rem 1rem;
+    gap: 1rem;
+  }
+
+  .neonText {
+    font-size: 1rem;
+    letter-spacing: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .neonDividerSection {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 1rem 0.5rem 1rem;
+  }
+
+  .neonLine {
+    width: 100%;
+    height: 2px;
+  }
+
+  .neonText {
+    font-size: 0.875rem;
+    letter-spacing: 2px;
+  }
+}
+
+@keyframes neonPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes neonTextPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
