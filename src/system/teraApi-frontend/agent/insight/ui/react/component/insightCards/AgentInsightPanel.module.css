@@ -1,0 +1,217 @@
+.panel {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid #0f3460;
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+}
+
+.panel.compact {
+  padding: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.title {
+  margin: 0;
+  color: #e94560;
+  font-size: 18px;
+}
+
+.compact .title {
+  font-size: 16px;
+}
+
+.count {
+  color: #666;
+  font-size: 14px;
+}
+
+.priorityBadge {
+  background: #e94560;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.summaryBar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid;
+  font-size: 12px;
+}
+
+.summaryDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.summaryLabel {
+  color: #a0a0a0;
+}
+
+.summaryCount {
+  color: #fff;
+  font-weight: bold;
+}
+
+.insightList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.insightCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  border-left: 4px solid #4a4a4a;
+  transition: all 0.2s ease;
+}
+
+.insightCard.clickable {
+  cursor: pointer;
+}
+
+.insightCard.clickable:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
+}
+
+.insightCard.clickable:focus {
+  outline: 2px solid #e94560;
+  outline-offset: 2px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cardLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.objectClass {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.confidence {
+  color: #4ECDC4;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.cardRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusBadge {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.analysis {
+  color: #a0a0a0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.compact .analysis {
+  font-size: 12px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.timestamp {
+  color: #666;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+.cameraId {
+  color: #4ECDC4;
+  font-size: 11px;
+}
+
+.moreIndicator {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 8px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.emptyState p {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+}

@@ -1,0 +1,995 @@
+/**
+ * CameraManager.module.css - Styles for Camera Management UI
+ */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.panel {
+  background: #1a1a2e;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.backBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #888;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  font-weight: 600;
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.addBtn {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.addBtn:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.refreshBtn,
+.closeBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #888;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.refreshBtn:hover,
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Banners */
+.successBanner {
+  background: linear-gradient(135deg, #1d4e3e 0%, #1a3d32 100%);
+  color: #4ade80;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.errorBanner {
+  background: linear-gradient(135deg, #4e1d1d 0%, #3d1a1a 100%);
+  color: #f87171;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.errorBanner button {
+  background: rgba(248, 113, 113, 0.2);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  color: #f87171;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #888;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Filter Bar */
+.filterBar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+.searchInput::placeholder {
+  color: #666;
+}
+
+.filterSelect {
+  padding: 0.65rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+.filterSelect option {
+  background: #1a1a2e;
+}
+
+/* Section Header */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  margin-bottom: 0.75rem;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.cameraCount {
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+/* Camera List */
+.cameraList {
+  display: grid;
+  gap: 1rem;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #666;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+
+/* Camera Card */
+.cameraCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.cameraCard:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.cameraHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.cameraInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cameraName {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.cameraLocation {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* Status Badges */
+.statusBadges {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge {
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badgeActive {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.badgeInactive {
+  background: rgba(156, 163, 175, 0.15);
+  color: #9ca3af;
+}
+
+.badgeEnabled {
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+}
+
+.badgeDisabled {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* Camera Details Grid */
+.cameraDetails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.detailRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.detailLabel {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.detailValue {
+  font-size: 0.85rem;
+  color: #ccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Camera Features */
+.cameraFeatures {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.feature {
+  padding: 0.35rem 0.65rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.featureOn {
+  background: rgba(96, 165, 250, 0.1);
+  color: #60a5fa;
+}
+
+/* Camera Actions */
+.cameraActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.toggleBtn,
+.editBtn,
+.deleteBtn,
+.confirmDeleteBtn,
+.cancelDeleteBtn {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.toggleBtn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #888;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.toggleBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ccc;
+}
+
+.editBtn {
+  background: rgba(96, 165, 250, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.editBtn:hover {
+  background: rgba(96, 165, 250, 0.2);
+}
+
+.deleteBtn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.deleteBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.confirmDeleteBtn {
+  background: #ef4444;
+  color: white;
+}
+
+.cancelDeleteBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #888;
+}
+
+/* Form Styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formSection {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.formSection h3 {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  color: #888;
+  font-weight: 500;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.fullWidth {
+  grid-column: span 2;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.formGroup label {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.formGroup input,
+.formGroup select {
+  padding: 0.6rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+.formGroup select option {
+  background: #1a1a2e;
+}
+
+.inputError {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+/* Toggle Grid */
+.toggleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.toggleLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.toggleLabel input {
+  display: none;
+}
+
+.toggleSwitch {
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.toggleSwitch::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #888;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: all 0.2s;
+}
+
+.toggleLabel input:checked + .toggleSwitch {
+  background: rgba(96, 165, 250, 0.3);
+}
+
+.toggleLabel input:checked + .toggleSwitch::after {
+  transform: translateX(20px);
+  background: #60a5fa;
+}
+
+/* Form Actions */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cancelBtn {
+  padding: 0.65rem 1.25rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #888;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cancelBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+}
+
+.saveBtn {
+  padding: 0.65rem 1.25rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.saveBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .panel {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  
+  .cameraDetails {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fullWidth {
+    grid-column: span 1;
+  }
+  
+  .toggleGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .webcamPanel {
+    margin: 0.5rem;
+  }
+  
+  .webcamList {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+   LOCAL WEBCAM PANEL - ONE-CLICK ADD
+   ========================================== */
+
+.webcamBtn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  position: relative;
+}
+
+.webcamBtn:hover {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.webcamBadge {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.15rem 0.45rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.webcamPanel {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  margin: 0 1rem 1rem;
+  border-radius: 10px;
+  padding: 1rem;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.webcamPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.webcamPanelHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #ecfdf5;
+  font-weight: 600;
+}
+
+.webcamCount {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+}
+
+.webcamPermission {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: #d1fae5;
+}
+
+.webcamPermission p {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.permissionBtn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.permissionBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  transform: translateY(-1px);
+}
+
+.permissionBtn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.webcamLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  color: #a7f3d0;
+  gap: 0.75rem;
+}
+
+.webcamEmpty {
+  text-align: center;
+  padding: 1.5rem;
+  color: #a7f3d0;
+}
+
+.webcamEmpty span {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.refreshWebcamBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #a7f3d0;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.refreshWebcamBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.webcamList {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.webcamItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.webcamInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.webcamName {
+  color: #ecfdf5;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.webcamId {
+  color: #6ee7b7;
+  font-size: 0.75rem;
+  font-family: monospace;
+}
+
+.addWebcamBtn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.addWebcamBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  transform: translateY(-1px);
+}
+
+.addWebcamBtn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.webcamError {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 6px;
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+/* ==========================================
+   FRESH GREEN THEME OVERRIDES
+   ========================================== */
+
+:global([data-theme="fresh"]) .overlay {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+:global([data-theme="fresh"]) .panel {
+  background: #ffffff;
+  border: 1px solid rgba(0, 163, 82, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 163, 82, 0.15);
+}
+
+:global([data-theme="fresh"]) .header {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-bottom: 1px solid rgba(0, 163, 82, 0.15);
+}
+
+:global([data-theme="fresh"]) .header h2 {
+  color: #065f46;
+}
+
+:global([data-theme="fresh"]) .addBtn {
+  background: linear-gradient(135deg, #00cc66 0%, #00a352 100%);
+}
+
+:global([data-theme="fresh"]) .addBtn:hover {
+  background: linear-gradient(135deg, #33d685 0%, #00cc66 100%);
+}
+
+:global([data-theme="fresh"]) .successBanner {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+}
+
+:global([data-theme="fresh"]) .errorBanner {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+}
+
+:global([data-theme="fresh"]) .searchInput,
+:global([data-theme="fresh"]) .filterSelect {
+  background: rgba(0, 163, 82, 0.05);
+  border: 1px solid rgba(0, 163, 82, 0.2);
+  color: #1a1a1a;
+}
+
+:global([data-theme="fresh"]) .searchInput:focus,
+:global([data-theme="fresh"]) .filterSelect:focus {
+  border-color: #00cc66;
+  box-shadow: 0 0 0 3px rgba(0, 204, 102, 0.1);
+}
+
+:global([data-theme="fresh"]) .cameraCard {
+  background: rgba(0, 163, 82, 0.03);
+  border: 1px solid rgba(0, 163, 82, 0.1);
+}
+
+:global([data-theme="fresh"]) .cameraCard:hover {
+  background: rgba(0, 163, 82, 0.06);
+  border-color: rgba(0, 163, 82, 0.2);
+}
+
+:global([data-theme="fresh"]) .cameraName {
+  color: #065f46;
+}
+
+:global([data-theme="fresh"]) .cameraLocation,
+:global([data-theme="fresh"]) .detailLabel,
+:global([data-theme="fresh"]) .detailValue {
+  color: #4a4a4a;
+}
+
+:global([data-theme="fresh"]) .badge {
+  background: rgba(0, 163, 82, 0.1);
+  color: #059669;
+}
+
+:global([data-theme="fresh"]) .badgeActive {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+}
+
+:global([data-theme="fresh"]) .toggleBtn,
+:global([data-theme="fresh"]) .editBtn {
+  background: rgba(0, 163, 82, 0.1);
+  border-color: rgba(0, 163, 82, 0.2);
+  color: #059669;
+}
+
+:global([data-theme="fresh"]) .toggleBtn:hover,
+:global([data-theme="fresh"]) .editBtn:hover {
+  background: rgba(0, 163, 82, 0.15);
+}
+
+:global([data-theme="fresh"]) .formSection h3 {
+  color: #065f46;
+}
+
+:global([data-theme="fresh"]) .formGroup label {
+  color: #059669;
+}
+
+:global([data-theme="fresh"]) .formGroup input,
+:global([data-theme="fresh"]) .formGroup select {
+  background: rgba(0, 163, 82, 0.03);
+  border-color: rgba(0, 163, 82, 0.2);
+  color: #1a1a1a;
+}
+
+:global([data-theme="fresh"]) .formGroup input:focus,
+:global([data-theme="fresh"]) .formGroup select:focus {
+  border-color: #00cc66;
+  box-shadow: 0 0 0 3px rgba(0, 204, 102, 0.1);
+}
+
+:global([data-theme="fresh"]) .saveBtn {
+  background: linear-gradient(135deg, #00cc66 0%, #00a352 100%);
+}
+
+:global([data-theme="fresh"]) .saveBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #33d685 0%, #00cc66 100%);
+}
+
+:global([data-theme="fresh"]) .webcamPanel {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-color: rgba(0, 163, 82, 0.3);
+}
+
+:global([data-theme="fresh"]) .webcamPanelHeader h3 {
+  color: #065f46;
+}
+
+:global([data-theme="fresh"]) .webcamCount {
+  background: rgba(0, 163, 82, 0.2);
+  color: #047857;
+}
+
+:global([data-theme="fresh"]) .webcamPermission,
+:global([data-theme="fresh"]) .webcamLoading,
+:global([data-theme="fresh"]) .webcamEmpty {
+  color: #065f46;
+}
+
+:global([data-theme="fresh"]) .webcamItem {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(0, 163, 82, 0.15);
+}
+
+:global([data-theme="fresh"]) .webcamName {
+  color: #065f46;
+}
+
+:global([data-theme="fresh"]) .webcamId {
+  color: #059669;
+}

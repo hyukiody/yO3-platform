@@ -1,0 +1,34 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+  color: #1f1f1f;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.updated {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.section h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.section ul {
+  padding-left: 1.25rem;
+  margin: 0.5rem 0 0;
+}
+
+.section li {
+  margin-bottom: 0.5rem;
+}

@@ -1,0 +1,21 @@
+﻿target/
+node_modules/
+.env
+.env.local
+.env.*
+!.env.example
+*.class
+*.jar
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# Private dev files (never publish to public repo)
+DEV_DOCS/
+*.txt
+preview*.log
+deployment-test-report.json
+coverage/
+test-results/
+.private/

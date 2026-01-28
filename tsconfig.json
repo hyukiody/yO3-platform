@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@system/*": ["src/system/*"],
+      "@agent/*": ["src/system/teraApi-frontend/agent/*"],
+      "@device/*": ["src/system/teraApi-frontend/device/*"],
+      "@video/*": ["src/system/teraApi-frontend/video/*"],
+      "@auth/*": ["src/system/teraApi-frontend/auth/*"],
+      "@ops/*": ["src/system/teraApi-frontend/ops/*"],
+      "@observability/*": ["src/system/teraApi-frontend/observability/*"],
+      "@analytics/*": ["src/system/teraApi-frontend/analytics/*"],
+      "@docs/*": ["src/system/teraApi-frontend/docs/*"],
+      "@services/*": ["src/services/*"],
+      "@components/*": ["src/components/*"],
+      "@types": ["src/types"],
+      "@types/*": ["src/types/*"],
+      "@lib/*": ["src/lib/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@contexts/*": ["src/contexts/*"]
+    },
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "types": ["vite/client", "vitest/globals"]
+  },
+  "include": ["src"]
+}

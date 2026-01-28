@@ -1,0 +1,195 @@
+.container {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid #0f3460;
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.title {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.statusIcon {
+  font-size: 14px;
+}
+
+.statusLabel {
+  color: #fff;
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  color: #a0a0a0;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #4ECDC4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.infoItem {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.infoLabel {
+  display: block;
+  color: #666;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.infoValue {
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.deviceBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.deviceBadge.cpu {
+  background: #666;
+  color: #fff;
+}
+
+.deviceBadge.cuda {
+  background: linear-gradient(135deg, #76b900 0%, #4d8500 100%);
+  color: #fff;
+}
+
+.deviceBadge.mps {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metric {
+  text-align: center;
+}
+
+.metricValue {
+  display: block;
+  color: #4ECDC4;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.metricLabel {
+  display: block;
+  color: #666;
+  font-size: 10px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.errorMessage {
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid #FF6B6B;
+  border-radius: 8px;
+  padding: 12px;
+  color: #FF6B6B;
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.lastUpdate {
+  color: #666;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+.refreshBtn {
+  background: transparent;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  color: #a0a0a0;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.refreshBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.refreshBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
