@@ -1,6 +1,8 @@
+
+```markdown
 # YO3 Platform
 
-Production-grade video surveillance platform demonstrating **Zero-Trust architecture**, client-side **AES-256-GCM encryption**, **JWT authentication**, and **tiered licensing**.
+Production-grade video surveillance platform demonstrating **Zero-Trust architecture**, client-side **AES-256-GCM encryption**, **Agentic Vision AI**, and an **11-node microservices** backend with **tiered licensing**.
 
 > **🌐 Live Demo:** [hyukiody.github.io/yO3-platform](https://hyukiody.github.io/yO3-platform/)
 
@@ -14,12 +16,12 @@ Production-grade video surveillance platform demonstrating **Zero-Trust architec
 
 ## ✨ Features
 
-- 🔐 **Zero-Trust Security** — Client-side AES-256-GCM encryption with user-controlled keys
-- 🎥 **Video Surveillance** — Real-time streaming with encrypted storage
+- 🔐 **Zero-Trust Security** — Hardware-backed client-side AES-256-GCM encryption (server never sees plaintext)
+- 🤖 **Agentic Vision AI** — YOLOv8 object detection integrated with Moondream VLM for deep scene analysis
+- 🏗️ **Microservices Architecture** — 11 independent Spring Boot nodes with real-time WebSocket/SSE streaming
+- 💳 **Commercial SaaS Engine** — 4-tier cryptographic licensing (Solo, Pro, Enterprise) via RSA-2048
 - 🔑 **JWT Authentication** — Secure stateless authentication with Spring Security
-- 💳 **Tiered Licensing** — Solo, Pro, and Enterprise license tiers
-- 📱 **Responsive UI** — Mobile-first React 18 interface
-- 🌍 **Internationalization** — English and Japanese support
+- 📱 **Showcase-Driven UI** — Mobile-first React 18 interface featuring 5+ interactive developer demos
 
 ---
 
@@ -30,6 +32,7 @@ Production-grade video surveillance platform demonstrating **Zero-Trust architec
 ```bash
 docker pull hyukiody/yo3-platform:latest
 docker run -d -p 5173:5173 --name yo3 hyukiody/yo3-platform:latest
+
 ```
 
 Access at: http://localhost:5173
@@ -37,10 +40,11 @@ Access at: http://localhost:5173
 ### Local Development
 
 ```bash
-git clone https://github.com/hyukiody/yO3-platform.git
+git clone [https://github.com/hyukiody/yO3-platform.git](https://github.com/hyukiody/yO3-platform.git)
 cd yO3-platform
 npm install
 npm run dev
+
 ```
 
 ---
@@ -48,60 +52,68 @@ npm run dev
 ## 🛠 Tech Stack
 
 | Layer | Technology |
-|-------|------------|
-| **Frontend** | React 18, TypeScript, Vite |
-| **Backend** | Spring Boot 3.4, Java 21 |
-| **Security** | AES-256-GCM, JWT, Web Crypto API |
-| **Database** | PostgreSQL 16 |
-| **Deployment** | Docker, GitHub Actions |
+| --- | --- |
+| **Frontend** | React 18, TypeScript, Vite, Web Crypto API |
+| **Backend Core** | Spring Boot 3.4, Java 21 (11 Microservices) |
+| **AI / Neural** | Python FastAPI, YOLOv8, Moondream VLM |
+| **Security** | AES-256-GCM, RSA-2048, JWT |
+| **Database & Ops** | PostgreSQL 16, Docker Compose, GitHub Actions |
 
 ---
 
 ## 📂 Project Structure
 
-```
+```text
 yO3-platform/
 ├── src/
 │   ├── components/     # React UI components
+│   ├── pages/showcase/ # Interactive demos (Encryption, AI, Architecture)
 │   ├── contexts/       # Auth & License contexts
-│   ├── services/       # API clients
-│   ├── workers/        # Web Workers (encryption)
-│   └── types/          # TypeScript definitions
-├── public/             # Static assets
+│   ├── workers/        # Web Workers (background client-side encryption)
+│   └── types/          # TypeScript & License tier definitions
+├── docker/             # Microservices compose files
 ├── Dockerfile          # Container build
 └── vite.config.ts      # Build configuration
+
 ```
 
 ---
 
-## 🔐 Security Architecture
+## 🔐 Security & AI Architecture
 
-```
+```text
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   User Device   │───▶│   API Gateway   │───▶│  Backend APIs   │
 │  (Seed Key)     │    │   (JWT Auth)    │    │  (Encrypted)    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
         │                                              │
         ▼                                              ▼
-┌─────────────────┐                          ┌─────────────────┐
-│  Web Crypto API │                          │   PostgreSQL    │
-│  (AES-256-GCM)  │                          │  (Encrypted)    │
-└─────────────────┘                          └─────────────────┘
+┌─────────────────┐                            ┌─────────────────┐
+│ Web Crypto API  │                            │   PostgreSQL    │
+│ (AES-256-GCM)   │                            │  (Encrypted)    │
+└─────────────────┘                            └─────────────────┘
+
 ```
 
-**Key Principle:** Server never sees plaintext video data. Decryption happens client-side only.
+**Key Principle:** The server never touches plaintext video data. Decryption happens purely on the client-side via browser Web Workers.
 
 ---
 
 ## 📄 License
 
-This project is open source under the [MIT License](LICENSE).
+This project is open source under the [MIT License](https://www.google.com/search?q=LICENSE).
 
 ---
 
 ## 📧 Contact
 
-- **GitHub:** [@hyukiody](https://github.com/hyukiody)
-- **Issues:** [Report bugs](https://github.com/hyukiody/yO3-platform/issues)
+* **GitHub:** [@hyukiody](https://github.com/hyukiody)
+* **Issues:** [Report bugs](https://github.com/hyukiody/yO3-platform/issues)
 
 **Privacy Policy:** [PRIVACY.md](PRIVACY.md)
+
+```
+
+Would you like me to help draft the `PRIVACY.md` file referenced at the bottom, focusing on how the Zero-Trust architecture fulfills standard GDPR/HIPAA compliance?
+
+```
