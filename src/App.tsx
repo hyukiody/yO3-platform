@@ -1,5 +1,7 @@
 import { Routes, Route, Link, Navigate } from 'react-router-dom'
+import React, { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
+import { GlobalErrorBoundary } from './components/system/GlobalErrorBoundary'
 import { useState } from 'react'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { useTheme } from './contexts/ThemeContext'
@@ -143,29 +145,33 @@ export default function App() {
           <div className={styles.neonLine}></div>
         </div>
 
-        <Routes>
-          <Route path="/" element={<Portfolio />} />
-          <Route path="/login" element={<Login />} />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route path="/showcase" element={<Showcase />} />
-          <Route path="/showcase/object-detection" element={<ObjectDetectionMonitor />} />
-          <Route path="/showcase/encryption" element={<EncryptionDemo />} />
-          <Route path="/showcase/architecture" element={<ArchitectureShowcase />} />
-          <Route path="/showcase/zero-trust" element={<ZeroTrustVideoDemo />} />
-          <Route path="/showcase/agent-vision" element={<AgentVisionDashboard />} />
-          <Route path="/showcase/webcam" element={<LiveWebcamDemo />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          {SHOW_TEST_DASHBOARD && (
-            <Route path="/test-dashboard" element={<TestDashboard />} />
-          )}
-        </Routes>
+        <GlobalErrorBoundary>
+          <Suspense fallback={<div className="flex items-center justify-center p-12 text-primary animate-pulse">Initializing Interface Array...</div>}>
+            <Routes>
+              <Route path="/" element={<Portfolio />} />
+              <Route path="/login" element={<Login />} />
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/showcase" element={<Showcase />} />
+              <Route path="/showcase/object-detection" element={<ObjectDetectionMonitor />} />
+              <Route path="/showcase/encryption" element={<EncryptionDemo />} />
+              <Route path="/showcase/architecture" element={<ArchitectureShowcase />} />
+              <Route path="/showcase/zero-trust" element={<ZeroTrustVideoDemo />} />
+              <Route path="/showcase/agent-vision" element={<AgentVisionDashboard />} />
+              <Route path="/showcase/webcam" element={<LiveWebcamDemo />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              {SHOW_TEST_DASHBOARD && (
+                <Route path="/test-dashboard" element={<TestDashboard />} />
+              )}
+            </Routes>
+          </Suspense>
+        </GlobalErrorBoundary>
 
         <footer className={styles.footer}>
           <span>© 2026 YO3 Platform</span>

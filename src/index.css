@@ -1,9 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 240 10% 4%; 
+    --color-fg: 0 0% 98%;   
+    --color-primary: 25 100% 50%; 
+    --color-primary-hover: 25 100% 60%;
+    --color-danger: 0 84% 60%;  
+    --color-warning: 38 92% 50%; 
+    --color-surface: 240 5% 10%;
+    --color-surface-hover: 240 5% 15%;
+  }
+}
+
 /* ========================================
    YO3 Platform - Global Styles
    Modern UI with professional design
-   ======================================== */
-
-/* ========================================
+   ======================================== *//* ========================================
    FRESH THEME - Green/White Desktop Mode
    ======================================== */
 
