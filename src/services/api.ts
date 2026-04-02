@@ -1,65 +1,48 @@
 // API Service for yo3 Platform
+import apiClient from '../infrastructure/api/apiClient';
 import type { AuthenticationRequest, AuthenticationResponse, User, DetectionEvent, Camera, QuotaUsage } from '../types';
 
-// Use relative paths to leverage Vite proxy configuration
+// Use relative paths to leverage Vite proxy configuration via the central apiClient
 const API_BASE_URL = '/api/auth';
-const STREAM_API_URL = '/api/video';
 const EVENTS_API_URL = '/api/events';
 
 class ApiService {
-  private getAuthHeaders(): HeadersInit {
-    const token = localStorage.getItem('yo3_token');
-    return {
-      'Content-Type': 'application/json',
-      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
-    };
-  }
+  // Implementation: Centralized Ingress (Directive 1)
+  // Localized headers and token lookups have been eradicated in favor of apiClient interceptors.
 
   // ===== Authentication =====
 
   async login(credentials: AuthenticationRequest): Promise<AuthenticationResponse> {
-    const response = await fetch(`${API_BASE_URL}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials),
-    });
+    try {
+      const response = await apiClient.post(`${API_BASE_URL}/login`, credentials);
+      const data = response.data;
+      
+      // Store token and seed key
+      localStorage.setItem('yo3_token', data.accessToken);
+      if (credentials.seedKey) {
+        localStorage.setItem('yo3_seed_key', credentials.seedKey);
+      }
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Login failed');
+      return data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Login failed');
     }
-
-    const data = await response.json();
-    
-    // Store token and seed key
-    localStorage.setItem('yo3_token', data.accessToken);
-    if (credentials.seedKey) {
-      localStorage.setItem('yo3_seed_key', credentials.seedKey);
-    }
-
-    return data;
   }
 
   async register(credentials: AuthenticationRequest): Promise<AuthenticationResponse> {
-    const response = await fetch(`${API_BASE_URL}/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials),
-    });
+    try {
+      const response = await apiClient.post(`${API_BASE_URL}/register`, credentials);
+      const data = response.data;
+      
+      localStorage.setItem('yo3_token', data.accessToken);
+      if (credentials.seedKey) {
+        localStorage.setItem('yo3_seed_key', credentials.seedKey);
+      }
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Registration failed');
+      return data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Registration failed');
     }
-
-    const data = await response.json();
-    
-    localStorage.setItem('yo3_token', data.accessToken);
-    if (credentials.seedKey) {
-      localStorage.setItem('yo3_seed_key', credentials.seedKey);
-    }
-
-    return data;
   }
 
   logout(): void {
@@ -79,15 +62,8 @@ class ApiService {
 
   async getCurrentUser(): Promise<User> {
     try {
-      const response = await fetch(`${API_BASE_URL}/users/me`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch user profile');
-      }
-
-      return response.json();
+      const response = await apiClient.get(`${API_BASE_URL}/users/me`);
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Using mock user data');
       return {
@@ -108,15 +84,8 @@ class ApiService {
 
   async getQuotaUsage(): Promise<QuotaUsage> {
     try {
-      const response = await fetch(`${API_BASE_URL}/users/me/quota`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch quota usage');
-      }
-
-      return response.json();
+      const response = await apiClient.get(`${API_BASE_URL}/users/me/quota`);
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Using mock quota data');
       return {
@@ -142,18 +111,10 @@ class ApiService {
 
   async getDetectionEvents(limit: number = 50, cameraId?: string): Promise<DetectionEvent[]> {
     try {
-      const params = new URLSearchParams({ limit: limit.toString() });
-      if (cameraId) params.append('cameraId', cameraId);
-
-      const response = await fetch(`${EVENTS_API_URL}/blue-flow/events?${params}`, {
-        headers: this.getAuthHeaders(),
+      const response = await apiClient.get(`${EVENTS_API_URL}/blue-flow/events`, {
+        params: { limit, cameraId }
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch detection events');
-      }
-
-      return response.json();
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Using mock detection events');
       const mockEvents: DetectionEvent[] = [];
@@ -183,15 +144,8 @@ class ApiService {
 
   async getCameras(): Promise<Camera[]> {
     try {
-      const response = await fetch(`${API_BASE_URL}/cameras`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch cameras');
-      }
-
-      return response.json();
+      const response = await apiClient.get(`${API_BASE_URL}/cameras`);
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Using mock camera data');
       return [
@@ -224,33 +178,23 @@ class ApiService {
   }
 
   async addCamera(camera: Omit<Camera, 'id'>): Promise<Camera> {
-    const response = await fetch(`${API_BASE_URL}/cameras`, {
-      method: 'POST',
-      headers: this.getAuthHeaders(),
-      body: JSON.stringify(camera),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Failed to add camera');
+    try {
+      const response = await apiClient.post(`${API_BASE_URL}/cameras`, camera);
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to add camera');
     }
-
-    return response.json();
   }
 
   // ===== Video Streams =====
 
   async getStreamUrl(storageKey: string): Promise<string> {
-    const response = await fetch(`${API_BASE_URL}/storage/${storageKey}/url`, {
-      headers: this.getAuthHeaders(),
-    });
-
-    if (!response.ok) {
+    try {
+      const response = await apiClient.get(`${API_BASE_URL}/storage/${storageKey}/url`);
+      return response.data.url;
+    } catch (err) {
       throw new Error('Failed to get stream URL');
     }
-
-    const data = await response.json();
-    return data.url;
   }
 }
 
