@@ -64,28 +64,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.warn('Auth message:', response.message);
       }
     } catch (err: any) {
-      // Demo Mode Fallback: Accept admin/admin123 when backend fails
-      if ((username === 'admin' || username.includes('@')) && password === 'admin123') {
-        console.warn('🎯 DEMO MODE: Backend error, using mock credentials');
-        const mockToken = 'demo-token-' + Date.now();
-        const mockUser: User = {
-          id: 1,
-          username: username,
-          email: username.includes('@') ? username : 'admin@demo.com',
-          role: 'ADMIN',
-          licenseTier: 'ENTERPRISE',
-          storageQuotaGb: 10,
-          apiRateLimit: 1000,
-          subscriptionStatus: 'ACTIVE',
-          isActive: true,
-        };
-        
-        setToken(mockToken);
-        setUser(mockUser);
-        localStorage.setItem('yo3_token', mockToken);
-        return;
-      }
-      
       setError(err.message || 'Login failed');
       throw err;
     } finally {

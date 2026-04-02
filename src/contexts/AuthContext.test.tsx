@@ -263,27 +263,14 @@ describe('AuthContext', () => {
       expect(screen.getByTestId('authenticated')).toHaveTextContent('no');
     });
 
-    it('uses demo mode fallback for admin credentials when backend fails', async () => {
+    it('propagates error when backend fails', async () => {
       const user = userEvent.setup();
       
       vi.mocked(apiService.login).mockRejectedValue(new Error('Backend unavailable'));
 
-      // Create a custom test consumer that uses admin credentials
-      function AdminTestConsumer() {
-        const { user, isAuthenticated, isLoading, login } = useAuth();
-        return (
-          <div>
-            <div data-testid="loading">{isLoading ? 'loading' : 'ready'}</div>
-            <div data-testid="authenticated">{isAuthenticated ? 'yes' : 'no'}</div>
-            <div data-testid="user">{user ? user.username : 'none'}</div>
-            <button onClick={() => login('admin', 'admin123', 'seedkey')}>Login</button>
-          </div>
-        );
-      }
-
       render(
         <AuthProvider>
-          <AdminTestConsumer />
+          <TestConsumer />
         </AuthProvider>
       );
 
@@ -294,11 +281,10 @@ describe('AuthContext', () => {
       await user.click(screen.getByText('Login'));
 
       await waitFor(() => {
-        expect(screen.getByTestId('authenticated')).toHaveTextContent('yes');
+        expect(screen.getByTestId('error')).toHaveTextContent('Backend unavailable');
       });
 
-      expect(screen.getByTestId('user')).toHaveTextContent('admin');
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('yo3_token', expect.stringContaining('demo-token-'));
+      expect(screen.getByTestId('authenticated')).toHaveTextContent('no');
     });
 
     it('displays warning message from login response', async () => {
