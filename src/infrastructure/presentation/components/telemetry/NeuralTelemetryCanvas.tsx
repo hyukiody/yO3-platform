@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useWebSocketStore } from '../../store/useWebSocketStore';
+import { useWebSocketStore } from '@store/useWebSocketStore';
 
 export interface NeuralTelemetryCanvasProps {
   cameraId: string;

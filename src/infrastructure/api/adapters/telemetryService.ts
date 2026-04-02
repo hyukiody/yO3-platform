@@ -3,7 +3,7 @@
  * Manages WebSocket connections to telemetry server
  */
 
-import { HealthData, ApiRequestLog, DataFlowEvent } from '../types/glass-box';
+import { HealthData, ApiRequestLog, DataFlowEvent } from '@domain/types/glass-box';
 
 const TELEMETRY_WS_BASE = import.meta.env.VITE_TELEMETRY_WS || 'ws://localhost:9093';
 

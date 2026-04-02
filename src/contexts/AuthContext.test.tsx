@@ -35,7 +35,7 @@ Object.defineProperty(navigator, 'userAgent', {
 });
 
 // Mock apiService
-vi.mock('../services/api', () => ({
+vi.mock('@services/api', () => ({
   apiService: {
     login: vi.fn(),
     register: vi.fn(),
@@ -44,7 +44,7 @@ vi.mock('../services/api', () => ({
   },
 }));
 
-import { apiService } from '../services/api';
+import { apiService } from '@services/api';
 
 // Test component that uses useAuth
 function TestConsumer() {

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import StorageService, { User } from '../lib/storageService';
+import StorageService, { User } from '@lib/storageService';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(() => StorageService.getUser());

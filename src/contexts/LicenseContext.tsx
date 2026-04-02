@@ -9,7 +9,7 @@ import {
   LicenseTierType, 
   LicenseFeature,
   LICENSE_PRICING 
-} from '../types';
+} from '@types';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES

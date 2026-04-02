@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ServiceHealth } from '@system/../types/glass-box';
+import { ServiceHealth } from '@domain/types/glass-box';
 import styles from './glass-box.module.css';
 
 interface ServiceHealthCardProps {

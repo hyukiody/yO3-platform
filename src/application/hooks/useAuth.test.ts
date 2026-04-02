@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useAuth } from '../hooks/useAuth';
-import StorageService from '../lib/storageService';
+import { useAuth } from './useAuth';
+import StorageService from '@lib/storageService';
 
-vi.mock('../lib/storageService', () => ({
+vi.mock('@lib/storageService', () => ({
   default: {
     getUser: vi.fn(),
     setUser: vi.fn(),
@@ -13,7 +13,7 @@ vi.mock('../lib/storageService', () => ({
   }
 }));
 
-vi.mock('../lib/apiClient', () => ({
+vi.mock('@infrastructure/api/apiClient', () => ({
   default: {
     login: vi.fn(),
     register: vi.fn(),

@@ -17,7 +17,7 @@ const ErrorFallback: React.FC<FallbackProps> = ({ error, resetErrorBoundary }) =
           The presentation matrix encountered a catastrophic fault. Edge node connections and core backend streams may persist asynchronously.
         </p>
         <div className="bg-background-dark p-4 rounded text-xs font-mono text-warning overflow-auto max-h-48 mb-6 border border-warning/10 shadow-inner">
-          {error.message}
+          {(error as any)?.message || String(error)}
         </div>
         <div className="flex justify-end gap-3">
           <button

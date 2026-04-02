@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { HealthData } from '@system/../types/glass-box';
+import { HealthData } from '@domain/types/glass-box';
 import { telemetryService } from '@services/telemetryService';
 import { ServiceHealthCard } from './ServiceHealthCard';
 import styles from './glass-box.module.css';
@@ -74,7 +74,7 @@ export const TelemetryDashboard: React.FC = () => {
         
         {healthData && (
           <>
-            {healthData.services.map((service) => (
+            {healthData.services.map((service: any) => (
               <ServiceHealthCard key={service.name} service={service} />
             ))}
             

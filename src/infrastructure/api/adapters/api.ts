@@ -1,6 +1,6 @@
 // API Service for yo3 Platform
-import apiClient from '../infrastructure/api/apiClient';
-import type { AuthenticationRequest, AuthenticationResponse, User, DetectionEvent, Camera, QuotaUsage } from '../types';
+import apiClient from '@infrastructure/api/apiClient';
+import type { AuthenticationRequest, AuthenticationResponse, User, DetectionEvent, Camera, QuotaUsage } from '@types';
 
 // Use relative paths to leverage Vite proxy configuration via the central apiClient
 const API_BASE_URL = '/api/auth';

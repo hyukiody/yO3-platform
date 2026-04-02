@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../contexts/AuthContext';
-import { apiService } from '../services/api';
+import { useAuth } from '@contexts/AuthContext';
+import { apiService } from '@services/api';
 import ApiRequestMonitor from '@observability/requests/ui/react/component/ApiRequestMonitor';
-import { initializeFetchInterception } from '../services/requestLogger';
-import type { QuotaUsage, DetectionEvent, Camera } from '../types';
+import { initializeFetchInterception } from '@services/requestLogger';
+import type { QuotaUsage, DetectionEvent, Camera } from '@types';
 
 interface DeploymentStatus {
   status?: string;

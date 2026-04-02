@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, act, cleanup, waitFor } from '@testing-library/react';
 import { TelemetryDashboard } from '../TelemetryDashboard';
 import { telemetryService } from '@services/telemetryService';
-import type { HealthData, ServiceHealth } from '@system/../types/glass-box';
+import { HealthData, ServiceHealth } from '@domain/types/glass-box';
 
 // Mock the telemetryService
 vi.mock('@services/telemetryService', () => ({

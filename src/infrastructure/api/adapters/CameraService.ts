@@ -1,41 +1,23 @@
 /**
  * CameraService - Camera Management API Client
- * Consumes: /api/cameras endpoints on Port 9090
+ * Consumes: Unified endpoints via API Gateway (Port 8091)
+ * Implementation: Directive 1 (Centralized Ingress)
  */
 
+import apiClient from '@infrastructure/api/apiClient';
 import type {
   CameraFull,
   CameraCreateRequest,
   CameraUpdateRequest,
   CameraType,
   CameraStatus,
-} from '../types';
+} from '@types';
 
 const CAMERA_API_URL = '/api/cameras';
 
 class CameraService {
-  private getAuthHeaders(): HeadersInit {
-    const token = localStorage.getItem('yo3_token');
-    return {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
-  }
-
-  /**
-   * Safely parse JSON response, falling back to null if not valid JSON
-   */
-  private async safeJsonParse<T>(response: Response): Promise<T> {
-    const text = await response.text();
-    if (!text || text.trim() === '') {
-      throw new Error('Empty response from server');
-    }
-    try {
-      return JSON.parse(text) as T;
-    } catch {
-      throw new Error(`Invalid JSON response: ${text.substring(0, 100)}`);
-    }
-  }
+  // Implementation: Centralized Ingress (Directive 1)
+  // Ad-hoc auth headers and localized safeJsonParse logic have been eradicated.
 
   // ===== READ Operations =====
 
@@ -44,15 +26,8 @@ class CameraService {
    */
   async getAllCameras(): Promise<CameraFull[]> {
     try {
-      const response = await fetch(CAMERA_API_URL, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch cameras: ${response.status}`);
-      }
-
-      return await this.safeJsonParse<CameraFull[]>(response);
+      const response = await apiClient.get(CAMERA_API_URL);
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Using mock camera data');
       return this.getMockCameras();
@@ -64,15 +39,8 @@ class CameraService {
    */
   async getActiveCameras(): Promise<CameraFull[]> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/active`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch active cameras');
-      }
-
-      return await this.safeJsonParse<CameraFull[]>(response);
+      const response = await apiClient.get(`${CAMERA_API_URL}/active`);
+      return response.data;
     } catch (err) {
       const mocks = this.getMockCameras();
       return mocks.filter((c) => c.isActive);
@@ -84,15 +52,8 @@ class CameraService {
    */
   async getEnabledCameras(): Promise<CameraFull[]> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/enabled`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch enabled cameras');
-      }
-
-      return await this.safeJsonParse<CameraFull[]>(response);
+      const response = await apiClient.get(`${CAMERA_API_URL}/enabled`);
+      return response.data;
     } catch (err) {
       const mocks = this.getMockCameras();
       return mocks.filter((c) => c.isEnabled);
@@ -104,15 +65,8 @@ class CameraService {
    */
   async getCameraCount(): Promise<number> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/count`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch camera count');
-      }
-
-      return await this.safeJsonParse<number>(response);
+      const response = await apiClient.get(`${CAMERA_API_URL}/count`);
+      return response.data;
     } catch (err) {
       return this.getMockCameras().length;
     }
@@ -123,15 +77,8 @@ class CameraService {
    */
   async getCamerasByType(type: CameraType): Promise<CameraFull[]> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/type/${type}`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch cameras by type: ${type}`);
-      }
-
-      return await this.safeJsonParse<CameraFull[]>(response);
+      const response = await apiClient.get(`${CAMERA_API_URL}/type/${type}`);
+      return response.data;
     } catch (err) {
       const mocks = this.getMockCameras();
       return mocks.filter((c) => c.cameraType === type);
@@ -143,15 +90,8 @@ class CameraService {
    */
   async getCamerasByStatus(status: CameraStatus): Promise<CameraFull[]> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/status/${status}`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch cameras by status: ${status}`);
-      }
-
-      return await this.safeJsonParse<CameraFull[]>(response);
+      const response = await apiClient.get(`${CAMERA_API_URL}/status/${status}`);
+      return response.data;
     } catch (err) {
       const mocks = this.getMockCameras();
       return mocks.filter((c) => c.status === status);
@@ -163,15 +103,8 @@ class CameraService {
    */
   async getCamera(id: string): Promise<CameraFull> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/${id}`, {
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Camera not found: ${id}`);
-      }
-
-      return await this.safeJsonParse<CameraFull>(response);
+      const response = await apiClient.get(`${CAMERA_API_URL}/${id}`);
+      return response.data;
     } catch (err) {
       const mocks = this.getMockCameras();
       const camera = mocks.find((c) => c.id === id);
@@ -187,21 +120,9 @@ class CameraService {
    */
   async createCamera(request: CameraCreateRequest): Promise<CameraFull> {
     try {
-      const response = await fetch(CAMERA_API_URL, {
-        method: 'POST',
-        headers: this.getAuthHeaders(),
-        body: JSON.stringify(request),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        let errorMsg = 'Failed to create camera';
-        try { errorMsg = JSON.parse(errorText).error || errorMsg; } catch {}
-        throw new Error(errorMsg);
-      }
-
-      return await this.safeJsonParse<CameraFull>(response);
-    } catch (err) {
+      const response = await apiClient.post(CAMERA_API_URL, request);
+      return response.data;
+    } catch (err: any) {
       console.warn('🎯 DEMO MODE: Simulating camera creation');
       return {
         id: `demo-${Date.now()}`,
@@ -232,24 +153,11 @@ class CameraService {
    */
   async updateCamera(id: string, request: CameraUpdateRequest): Promise<CameraFull> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/${id}`, {
-        method: 'PUT',
-        headers: this.getAuthHeaders(),
-        body: JSON.stringify(request),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        let errorMsg = 'Failed to update camera';
-        try { errorMsg = JSON.parse(errorText).error || errorMsg; } catch {}
-        throw new Error(errorMsg);
-      }
-
-      return await this.safeJsonParse<CameraFull>(response);
-    } catch (err) {
+      const response = await apiClient.put(`${CAMERA_API_URL}/${id}`, request);
+      return response.data;
+    } catch (err: any) {
       console.warn('🎯 DEMO MODE: Simulating camera update');
       const camera = await this.getCamera(id);
-      // Handle metadata conversion from string to object if needed
       const { metadata: metadataStr, ...otherFields } = request;
       const metadata = metadataStr 
         ? (typeof metadataStr === 'string' ? JSON.parse(metadataStr) : metadataStr) 
@@ -268,16 +176,10 @@ class CameraService {
    */
   async toggleActive(id: string, active: boolean): Promise<CameraFull> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/${id}/toggle-active?active=${active}`, {
-        method: 'PATCH',
-        headers: this.getAuthHeaders(),
+      const response = await apiClient.patch(`${CAMERA_API_URL}/${id}/toggle-active`, null, {
+        params: { active }
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to toggle camera active status');
-      }
-
-      return await this.safeJsonParse<CameraFull>(response);
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Simulating toggle active');
       const camera = await this.getCamera(id);
@@ -295,16 +197,10 @@ class CameraService {
    */
   async toggleEnabled(id: string, enabled: boolean): Promise<CameraFull> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/${id}/toggle-enabled?enabled=${enabled}`, {
-        method: 'PATCH',
-        headers: this.getAuthHeaders(),
+      const response = await apiClient.patch(`${CAMERA_API_URL}/${id}/toggle-enabled`, null, {
+        params: { enabled }
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to toggle camera enabled status');
-      }
-
-      return await this.safeJsonParse<CameraFull>(response);
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Simulating toggle enabled');
       const camera = await this.getCamera(id);
@@ -321,19 +217,10 @@ class CameraService {
    */
   async updateStatus(id: string, status: CameraStatus, errorMessage?: string): Promise<CameraFull> {
     try {
-      const params = new URLSearchParams({ status });
-      if (errorMessage) params.append('errorMessage', errorMessage);
-
-      const response = await fetch(`${CAMERA_API_URL}/${id}/status?${params}`, {
-        method: 'PATCH',
-        headers: this.getAuthHeaders(),
+      const response = await apiClient.patch(`${CAMERA_API_URL}/${id}/status`, null, {
+        params: { status, errorMessage }
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to update camera status');
-      }
-
-      return await this.safeJsonParse<CameraFull>(response);
+      return response.data;
     } catch (err) {
       console.warn('🎯 DEMO MODE: Simulating status update');
       const camera = await this.getCamera(id);
@@ -353,14 +240,7 @@ class CameraService {
    */
   async deleteCamera(id: string): Promise<void> {
     try {
-      const response = await fetch(`${CAMERA_API_URL}/${id}`, {
-        method: 'DELETE',
-        headers: this.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete camera: ${id}`);
-      }
+      await apiClient.delete(`${CAMERA_API_URL}/${id}`);
     } catch (err) {
       console.warn('🎯 DEMO MODE: Simulating camera deletion');
     }

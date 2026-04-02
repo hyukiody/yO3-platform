@@ -143,12 +143,14 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  color: #e0e0e0;
-  font-size: 16px;
+  background: linear-gradient(135deg, #0a0a0f 0%, #12121a 100%);
+  color: #e2e8f0;
+  /* Fluid typography: 14px at 320px to 18px at 1280px */
+  font-size: clamp(0.875rem, 0.8rem + 0.375vw, 1.125rem);
+  line-height: 1.6;
   min-height: 100vh;
 }
 
@@ -183,10 +185,10 @@ h3 {
 }
 
 p {
-  font-size: 1rem;
-  color: #b0b0b0;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+  max-width: 65ch; /* Optical tracking limit for readability */
+  color: #94a3b8;
+  line-height: 1.75; /* Relaxed leading */
+  margin-bottom: 1.5rem;
 }
 
 a {
@@ -215,11 +217,11 @@ code {
 }
 
 .app {
-  padding: 1rem;
-  max-width: 1600px;
+  padding: clamp(1rem, 5vw, 3rem); /* Fluid padding */
+  max-width: 1440px;
   margin: 0 auto;
   width: 100%;
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card {

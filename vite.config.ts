@@ -38,6 +38,7 @@ export default defineConfig(({ command, mode }) => {
     // Path aliases matching tsconfig.json
     resolve: {
       alias: {
+        '@contracts': path.resolve(__dirname, './src/contracts'),
         '@system': path.resolve(__dirname, './src/system'),
         '@agent': path.resolve(__dirname, './src/system/teraApi-frontend/agent'),
         '@device': path.resolve(__dirname, './src/system/teraApi-frontend/device'),
@@ -47,13 +48,20 @@ export default defineConfig(({ command, mode }) => {
         '@observability': path.resolve(__dirname, './src/system/teraApi-frontend/observability'),
         '@analytics': path.resolve(__dirname, './src/system/teraApi-frontend/analytics'),
         '@docs': path.resolve(__dirname, './src/system/teraApi-frontend/docs'),
-        '@services': path.resolve(__dirname, './src/services'),
-        '@components': path.resolve(__dirname, './src/components'),
-        '@types': path.resolve(__dirname, './src/types'),
-        '@types/*': path.resolve(__dirname, './src/types'),
+        '@services': path.resolve(__dirname, './src/infrastructure/api/adapters'),
+        '@components': path.resolve(__dirname, './src/infrastructure/presentation/components'),
+        '@types': path.resolve(__dirname, './src/domain/types'),
+        '@types/*': path.resolve(__dirname, './src/domain/types'),
         '@lib': path.resolve(__dirname, './src/lib'),
-        '@hooks': path.resolve(__dirname, './src/hooks'),
+        '@hooks': path.resolve(__dirname, './src/application/hooks'),
         '@contexts': path.resolve(__dirname, './src/contexts'),
+        '@store': path.resolve(__dirname, './src/infrastructure/store'),
+        '@infrastructure': path.resolve(__dirname, './src/infrastructure'),
+        '@application': path.resolve(__dirname, './src/application'),
+        '@domain': path.resolve(__dirname, './src/domain'),
+        "@generated": path.resolve(__dirname, "./src/domain/generated"),
+        "@mappers": path.resolve(__dirname, "./src/infrastructure/api/mappers"),
+        "@pages": path.resolve(__dirname, "./src/pages")
       },
     },
 
@@ -75,29 +83,8 @@ export default defineConfig(({ command, mode }) => {
 
       // Proxy configuration for all backend services
       proxy: {
-        // Data-Core Microkernel (encoding/stream processing)
-        '/api/stream': {
-          target: 'http://localhost:8080',
-          changeOrigin: true,
-          secure: false,
-        },
-
-        // Identity Service (auth/licensing)
-        '/api/auth': {
-          target: 'http://localhost:8081',
-          changeOrigin: true,
-          secure: false,
-        },
-
-        // Stream Processing Service
-        '/api/video': {
-          target: 'http://localhost:8082',
-          changeOrigin: true,
-          secure: false,
-        },
-
-        // Middleware (events/metadata - Blue Flow)
-        '/api/events': {
+        // Unified API Gateway Ingress (Blue Flow)
+        '/api': {
           target: 'http://localhost:8091',
           changeOrigin: true,
           secure: false,

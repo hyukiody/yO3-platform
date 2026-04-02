@@ -1,4 +1,4 @@
-import { TelemetryDetection } from '../../../store/useWebSocketStore';
+import { TelemetryDetection } from '@store/useWebSocketStore';
 
 /**
  * Anti-Corruption Layer (ACL) - Telemetry Structural Mapper

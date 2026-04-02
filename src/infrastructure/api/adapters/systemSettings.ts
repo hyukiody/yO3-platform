@@ -12,7 +12,7 @@ import {
   type AnalysisProfile,
   type EnterpriseEdition,
   type RecoveryStrategy 
-} from '../contracts/Analysis';
+} from '@contracts/Analysis';
 
 // ═══════════════════════════════════════════════════════════════
 // DEPLOYMENT ENVIRONMENT

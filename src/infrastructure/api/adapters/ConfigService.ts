@@ -3,7 +3,7 @@
  * Consumes: /api/config endpoints on Port 8081
  */
 
-import type { SystemConfig, ConfigUpdateRequest, ConfigBulkUpdateItem, ConfigDataType } from '../types';
+import type { SystemConfig, ConfigUpdateRequest, ConfigBulkUpdateItem, ConfigDataType } from '@types';
 
 const CONFIG_API_URL = '/api/config';
 

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ServiceHealthCard } from '../ServiceHealthCard';
-import type { ServiceHealth } from '@system/../types/glass-box';
+import { ServiceHealth } from '@domain/types/glass-box';
 
 describe('ServiceHealthCard Component', () => {
   const createMockService = (overrides: Partial<ServiceHealth> = {}): ServiceHealth => ({

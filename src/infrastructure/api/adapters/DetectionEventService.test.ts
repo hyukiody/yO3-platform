@@ -1,5 +1,5 @@
 import { test, expect, describe, beforeEach, afterEach, vi } from 'vitest';
-import detectionEventService, { DetectionEventDTO } from '../services/DetectionEventService';
+import detectionEventService, { DetectionEventDTO } from '@services/DetectionEventService';
 
 describe('DetectionEventService - End-to-End Integration', () => {
   let mockWebSocket: any;

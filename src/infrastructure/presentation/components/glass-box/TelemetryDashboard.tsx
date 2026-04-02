@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { HealthData } from '../../types/glass-box';
-import { telemetryService } from '../../services/telemetryService';
+import { HealthData } from '@domain/types/glass-box';
+import { telemetryService } from '@services/telemetryService';
 import { ServiceHealthCard } from './ServiceHealthCard';
 import styles from './glass-box.module.css';
 

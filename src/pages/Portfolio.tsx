@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import SelfHostedReadme from '@docs/showcase/ui/react/component/SelfHostedReadme'
-import type { GitConfig } from '../lib/gitClient'
+import type { GitConfig } from '@lib/gitClient'
 
 export default function Portfolio() {
   const { t } = useTranslation()

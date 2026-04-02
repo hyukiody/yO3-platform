@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { mapTelemetryDTOtoDomain } from '../infrastructure/api/mappers/telemetryMapper';
+import { mapTelemetryDTOtoDomain } from '@mappers/telemetryMapper';
 
 export interface TelemetryDetection {
   label: string;

@@ -4,8 +4,8 @@
  */
 
 import React from 'react';
-import { useLicense, FEATURE_CATALOG } from '../../contexts/LicenseContext';
-import { LicenseFeature, LICENSE_PRICING } from '../../types';
+import { useLicense, FEATURE_CATALOG } from '@contexts/LicenseContext';
+import { LicenseFeature, LICENSE_PRICING } from '@types';
 
 /**
  * UpgradeModal - The "Money Modal"
