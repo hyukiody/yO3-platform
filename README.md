@@ -112,8 +112,3 @@ This project is open source under the [MIT License](https://www.google.com/searc
 
 **Privacy Policy:** [PRIVACY.md](PRIVACY.md)
 
-```
-
-Would you like me to help draft the `PRIVACY.md` file referenced at the bottom, focusing on how the Zero-Trust architecture fulfills standard GDPR/HIPAA compliance?
-
-```
