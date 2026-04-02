@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function EncryptionDemo() {
   const [plaintext, setPlaintext] = useState('Hello, secure world! 🔐');
-  const [password, setPassword] = useState('my-secret-password-2026');
+  const [password, setPassword] = useState('');
   const [encrypted, setEncrypted] = useState('');
   const [decrypted, setDecrypted] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);

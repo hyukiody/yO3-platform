@@ -18,21 +18,6 @@ export const useAuth = () => {
       });
 
       if (!response.ok) {
-        // Demo Mode Fallback: Accept admin/admin123 for testing
-        if ((email === 'admin' || email === 'admin@demo.com') && password === 'admin123') {
-          console.warn('🎯 DEMO MODE: Using mock credentials');
-          const userData: User = {
-            id: 'demo-user-001',
-            email: email,
-            username: 'admin',
-            token: 'demo-token-' + Date.now(),
-            createdAt: new Date().toISOString()
-          };
-          StorageService.setUser(userData);
-          StorageService.setToken(userData.token);
-          setUser(userData);
-          return;
-        }
         throw new Error('Login failed');
       }
 
@@ -49,21 +34,6 @@ export const useAuth = () => {
       StorageService.setToken(data.token);
       setUser(userData);
     } catch (err) {
-      // Demo Mode Fallback: Accept admin/admin123 for testing
-      if ((email === 'admin' || email === 'admin@demo.com') && password === 'admin123') {
-        console.warn('🎯 DEMO MODE: API unreachable, using mock credentials');
-        const userData: User = {
-          id: 'demo-user-001',
-          email: email,
-          username: 'admin',
-          token: 'demo-token-' + Date.now(),
-          createdAt: new Date().toISOString()
-        };
-        StorageService.setUser(userData);
-        StorageService.setToken(userData.token);
-        setUser(userData);
-        return;
-      }
       setError(err instanceof Error ? err.message : 'Login error');
     } finally {
       setIsLoading(false);
