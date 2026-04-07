@@ -1,7 +1,7 @@
 {
-  "name": "frontproject-development-serviceapi",
+  "name": "yo3-platform",
   "version": "1.0.0",
-  "description": "Orange-themed React + Vite + TypeScript frontend with mobile-optimized design",
+  "description": "Production-grade video surveillance platform with Zero-Trust architecture, AES-256-GCM encryption, Agentic Vision AI, and 11-node microservices backend",
   "main": "index.js",
   "private": true,
   "type": "module",
@@ -21,9 +21,9 @@
     "test:ci": "vitest run --coverage",
     "open": "start http://localhost:5173/",
     "preview:open": "vite preview --open",
-    "open:live": "start https://hyukiody.github.io/frontproject-development-serviceApi/",
-    "status:deploy": "start https://github.com/hyukiody/frontproject-development-serviceApi/actions/workflows/deploy.yml",
-    "status:ci": "start https://github.com/hyukiody/frontproject-development-serviceApi/actions/workflows/ci.yml",
+    "open:live": "start https://hyukiody.github.io/yO3-platform/",
+    "status:deploy": "start https://github.com/hyukiody/yO3-platform/actions/workflows/deploy.yml",
+    "status:ci": "start https://github.com/hyukiody/yO3-platform/actions/workflows/ci.yml",
     "sync-api": "npx openapi-typescript-codegen -i http://localhost:8091/v3/api-docs -o ./src/domain/generated"
   },
   "keywords": [
